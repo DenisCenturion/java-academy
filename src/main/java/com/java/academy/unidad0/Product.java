@@ -1,4 +1,4 @@
-package unidad0;
+package com.java.academy.unidad0;
 
 import java.util.Objects;
 
