@@ -2,9 +2,11 @@ package com.java.academy.unidad0;
 
 import java.util.Objects;
 
-public class Product {
+public class Product implements Comparable<Product>{
 	private final String sku;
 	private String name;
+	
+	private int stock = 0;
 
 	public Product(String sku, String name) {
 		this.sku = Objects.requireNonNull(sku, "No se permiten SKU invalidos");
@@ -48,6 +50,34 @@ public class Product {
 	public int hashCode() {
 		return Objects.hash(sku);
 
+	}
+
+	@Override
+	public int compareTo(Product other) {
+		return this.sku.compareTo(other.sku);
+	}
+
+	public int getStock() {
+		return stock;
+	}
+	
+	public boolean hasEnoughStock(int quantity) {
+		return quantity > 0 && this.stock >= quantity;
+		
+	}
+	
+	public void addStock(int stock) {
+		if(stock <= 0) {
+			throw new IllegalArgumentException("El stock inicial debe ser mayor a 0");
+		}
+		this.stock += stock;
+	}
+
+	public void discountStock(int quantity) {
+		if(!hasEnoughStock(quantity) ) {
+			throw new IllegalArgumentException("El stock a descontar no puede ser negativo ni mayor al stock existente");
+		}
+		this.stock-=quantity;
 	}
 
 }
